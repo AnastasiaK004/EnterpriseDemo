@@ -1,5 +1,6 @@
 package ru.anastasiya.enterprisedemo.entity;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,9 +12,13 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Employee { //Переход на Spring Data JPA в дальнейшем
+@Entity
+public class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String fullName;
     Integer salary;
-    Department department; //Bidirectional Many-to-One связь с отделами
+    @ManyToOne
+    Department department;
 }

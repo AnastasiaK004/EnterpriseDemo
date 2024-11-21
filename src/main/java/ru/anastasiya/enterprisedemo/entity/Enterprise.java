@@ -1,5 +1,6 @@
 package ru.anastasiya.enterprisedemo.entity;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,9 +12,13 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Entreprise { //Переход на Spring Data JPA в дальнейшем
+@Entity
+public class Enterprise {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String name;
     String description;
+    @OneToMany(mappedBy = "enterprise")
     List<Department> departmentList;
 }
