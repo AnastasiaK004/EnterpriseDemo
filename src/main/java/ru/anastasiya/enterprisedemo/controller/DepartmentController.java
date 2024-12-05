@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.anastasiya.enterprisedemo.dto.DepartmentRequestDto;
 import ru.anastasiya.enterprisedemo.dto.DepartmentResponseDto;
+import ru.anastasiya.enterprisedemo.dto.EmployeeResponseDto;
 import ru.anastasiya.enterprisedemo.interfaces.GenericCrudInterface;
 import ru.anastasiya.enterprisedemo.service.DepartmentService;
 
@@ -27,7 +28,7 @@ public class DepartmentController implements GenericCrudInterface<Long, Departme
      */
     @Override
     @PostMapping
-    public DepartmentResponseDto create(DepartmentRequestDto departmentRequestDto) {
+    public DepartmentResponseDto create(@RequestBody DepartmentRequestDto departmentRequestDto) {
         return departmentService.create(departmentRequestDto);
     }
 
@@ -37,8 +38,8 @@ public class DepartmentController implements GenericCrudInterface<Long, Departme
      * @return информация об отделе.
      */
     @Override
-    @GetMapping
-    public DepartmentResponseDto get(Long id) {
+    @GetMapping("/{id}")
+    public DepartmentResponseDto get(@PathVariable Long id) {
         return departmentService.get(id);
     }
 
@@ -59,8 +60,8 @@ public class DepartmentController implements GenericCrudInterface<Long, Departme
      * @return обновленная информация об отделе.
      */
     @Override
-    @PatchMapping
-    public DepartmentResponseDto update(Long id, DepartmentRequestDto departmentRequestDto) {
+    @PutMapping("/{id}")
+    public DepartmentResponseDto update(@PathVariable Long id, @RequestBody DepartmentRequestDto departmentRequestDto) {
         return departmentService.update(id, departmentRequestDto);
     }
 
@@ -69,8 +70,13 @@ public class DepartmentController implements GenericCrudInterface<Long, Departme
      * @param id идентификатор отдела.
      */
     @Override
-    @DeleteMapping
-    public void delete(Long id) {
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
         departmentService.delete(id);
+    }
+
+    @GetMapping("/{id}/employees")
+    public List<EmployeeResponseDto> getEmployees(@PathVariable Long id){
+        return departmentService.employees(id);
     }
 }

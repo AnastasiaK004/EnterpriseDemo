@@ -6,5 +6,6 @@ import java.util.List;
 
 public record DepartmentRequestDto(
     String name,
-    String description) {
+    String description,
+    Long enterpriseId) {
 }

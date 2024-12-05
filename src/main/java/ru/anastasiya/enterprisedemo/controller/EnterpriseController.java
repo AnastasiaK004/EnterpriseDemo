@@ -2,6 +2,7 @@ package ru.anastasiya.enterprisedemo.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import ru.anastasiya.enterprisedemo.dto.DepartmentResponseDto;
 import ru.anastasiya.enterprisedemo.dto.EnterpriseRequestDto;
 import ru.anastasiya.enterprisedemo.dto.EnterpriseResponseDto;
 import ru.anastasiya.enterprisedemo.interfaces.GenericCrudInterface;
@@ -27,7 +28,7 @@ public class EnterpriseController implements GenericCrudInterface<Long, Enterpri
      */
     @Override
     @PostMapping
-    public EnterpriseResponseDto create(EnterpriseRequestDto enterpriseRequestDto) {
+    public EnterpriseResponseDto create(@RequestBody EnterpriseRequestDto enterpriseRequestDto) {
         return enterpriseService.create(enterpriseRequestDto);
     }
 
@@ -37,8 +38,8 @@ public class EnterpriseController implements GenericCrudInterface<Long, Enterpri
      * @return информация о предприятии.
      */
     @Override
-    @GetMapping
-    public EnterpriseResponseDto get(Long id) {
+    @GetMapping("/{id}")
+    public EnterpriseResponseDto get(@PathVariable Long id) {
         return enterpriseService.get(id);
     }
 
@@ -59,8 +60,8 @@ public class EnterpriseController implements GenericCrudInterface<Long, Enterpri
      * @return обновленная информация о предприятии.
      */
     @Override
-    @PatchMapping
-    public EnterpriseResponseDto update(Long id, EnterpriseRequestDto enterpriseRequestDto) {
+    @PutMapping("/{id}")
+    public EnterpriseResponseDto update(@PathVariable Long id, @RequestBody EnterpriseRequestDto enterpriseRequestDto) {
         return enterpriseService.update(id, enterpriseRequestDto);
     }
 
@@ -69,8 +70,13 @@ public class EnterpriseController implements GenericCrudInterface<Long, Enterpri
      * @param id идентификатор предприятия.
      */
     @Override
-    @DeleteMapping
-    public void delete(Long id) {
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
         enterpriseService.delete(id);
+    }
+
+    @GetMapping("/{id}/departments")
+    public List<DepartmentResponseDto> getDepartments(@PathVariable Long id){
+        return enterpriseService.departments(id);
     }
 }

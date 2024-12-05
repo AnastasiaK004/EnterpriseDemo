@@ -27,7 +27,7 @@ public class EmployeeController implements GenericCrudInterface<Long, EmployeeRe
      */
     @Override
     @PostMapping
-    public EmployeeResponseDto create(EmployeeRequestDto employeeRequestDto) {
+    public EmployeeResponseDto create(@RequestBody EmployeeRequestDto employeeRequestDto) {
         return employeeService.create(employeeRequestDto);
     }
 
@@ -37,8 +37,8 @@ public class EmployeeController implements GenericCrudInterface<Long, EmployeeRe
      * @return информация о сотруднике.
      */
     @Override
-    @GetMapping
-    public EmployeeResponseDto get(Long id) {
+    @GetMapping("/{id}")
+    public EmployeeResponseDto get(@PathVariable Long id) {
         return employeeService.get(id);
     }
 
@@ -59,8 +59,8 @@ public class EmployeeController implements GenericCrudInterface<Long, EmployeeRe
      * @return обновленная информация о сотруднике.
      */
     @Override
-    @PatchMapping
-    public EmployeeResponseDto update(Long id, EmployeeRequestDto employeeRequestDto) {
+    @PutMapping("/{id}")
+    public EmployeeResponseDto update(@PathVariable Long id, @RequestBody EmployeeRequestDto employeeRequestDto) {
         return employeeService.update(id, employeeRequestDto);
     }
 
@@ -69,8 +69,8 @@ public class EmployeeController implements GenericCrudInterface<Long, EmployeeRe
      * @param id идентификатор сотрудника.
      */
     @Override
-    @DeleteMapping
-    public void delete(Long id) {
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
         employeeService.delete(id);
     }
 }
